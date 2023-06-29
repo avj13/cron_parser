@@ -54,6 +54,28 @@ def expand(field, start, end):
     #
     # return expanded
 
+def is_valid_field(field, start, end):
+    if field == '*':
+        return True
+
+    elements = field.split(',')
+
+    for element in elements:
+        if '-' in element:
+            range_start, range_end = element.split('-')
+            if not range_start.isdigit() or not range_end.isdigit():
+                return False
+            if int(range_start) < start or int(range_end) > end:
+                return False
+        elif '/' in element:
+            increment = element.split('/')[1]
+            if not increment.isdigit() or int(increment) <= 0:
+                return False
+        elif not element.isdigit() or int(element) < start or int(element) > end:
+            return False
+
+    return True
+
 def expand_subfield(subfield, start, end):
     subfield_expanded = set()
     #  TODO CASE 0   2,16-20/2    *   *   *
@@ -94,13 +116,17 @@ def pasrse_input_string(cron_string):
     fields = cron_string.split(' ') #cron string time values seperated by space
 
     output = []
-
-    minutes = sorted(expand(fields[0],0,59))
-    hours = sorted(expand(fields[1],0,23))
-    days_of_month = sorted(expand(fields[2], 1,31))
-    months = sorted(expand(fields[3],1,12))
-    days_of_week = sorted(expand(fields[4],1,7))
-    command = fields[5]
+    if not is_valid_field(fields[0], 0, 59) or not is_valid_field(fields[1], 0, 23) or not is_valid_field(fields[2], 1, 31) \
+            or not is_valid_field(fields[3], 1, 12) or not is_valid_field(fields[4], 1, 7):
+        print("Invalid Cron format. Check and Try Again")
+        sys.exit(0)
+    else:
+        minutes = sorted(expand(fields[0],0,59))
+        hours = sorted(expand(fields[1],0,23))
+        days_of_month = sorted(expand(fields[2], 1,31))
+        months = sorted(expand(fields[3],1,12))
+        days_of_week = sorted(expand(fields[4],1,7))
+        command = fields[5]
 
     print_table(minutes,hours,days_of_month, months, days_of_week, command)
 
@@ -108,7 +134,3 @@ def pasrse_input_string(cron_string):
 
 # cron_string = '*/15 0 1,15 * 1-5'
 schedule = pasrse_input_string(cron_string)
-# print(schedule)
-
-
-
