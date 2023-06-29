@@ -17,5 +17,6 @@ To execute the job
 for example: ` python script.py "*/15 0 1,15 * 1-5 /usr/bin/find" `
 
 Expected output in the format:
+
 ![image](https://github.com/avj13/cron_parser/assets/49868709/02e10e49-febb-4a86-9152-c6eb6dab140b)
 
