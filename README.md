@@ -12,7 +12,7 @@ venv > main_script.py
 
 To execute the job
  - Open a terminal
- - python main_script.py "<d>"  // d > cron_string
+ - python main_script.py "d"   d = cron_string
 
 for example: ` python script.py "*/15 0 1,15 * 1-5 /usr/bin/find" `
 
