@@ -102,7 +102,7 @@ def expand_subfield(subfield, start, end):
 
 def print_table(minutes,hours,days_of_month, months, days_of_week, command):
     table_data = []
-    table_header = ['Field', 'Expanded Times']
+    table_header = ['Field','', 'Expanded Times']
     table_data.append(['Minutes', ' ',minutes])
     table_data.append(['Hours', ' ', hours])
     table_data.append(['Days of Month', ' ' , days_of_month])
